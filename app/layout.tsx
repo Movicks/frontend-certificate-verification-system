@@ -5,8 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { QueryProvider } from "@/providers/query-provider"
 import "./globals.css"
 
-import { Provider } from "react-redux"
-import { store } from "@/store/store"
+import { ReduxProvider } from "@/providers/redux-provider"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -42,9 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        <Provider store={store}>
+        <ReduxProvider>
           <QueryProvider>{children}</QueryProvider>
-        </Provider>
+        </ReduxProvider>
         <Analytics />
       </body>
     </html>
