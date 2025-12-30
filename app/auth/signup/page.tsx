@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Building2, AlertCircle, CheckCircle } from "lucide-react"
 import { AnimatedContainer } from "@/components/animated-container"
@@ -21,15 +20,12 @@ export default function SignupPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    contactName: "",
-    phone: "",
-    website: "",
-    address: "",
+    accreditationId: "",
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -59,8 +55,8 @@ export default function SignupPage() {
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match"
     }
-    if (!formData.contactName.trim()) {
-      newErrors.contactName = "Contact name is required"
+    if (!formData.accreditationId.trim()) {
+      newErrors.accreditationId = "Accreditation ID is required"
     }
 
     setErrors(newErrors)
@@ -76,10 +72,7 @@ export default function SignupPage() {
       institutionName: formData.institutionName,
       email: formData.email,
       password: formData.password,
-      contactName: formData.contactName,
-      phone: formData.phone,
-      website: formData.website,
-      address: formData.address,
+      accreditationId: formData.accreditationId,
     })
   }
 
@@ -113,80 +106,48 @@ export default function SignupPage() {
                       value={formData.institutionName}
                       onChange={handleChange}
                       className={errors.institutionName ? "border-destructive" : ""}
+                      autoComplete="institutionName"
                     />
                     {errors.institutionName && <p className="text-xs text-destructive">{errors.institutionName}</p>}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email">
-                      Institution Email <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="contact@university.edu"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={errors.email ? "border-destructive" : ""}
-                    />
-                    {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                  <div className="col-span-1 md:col-span-2 flex flex-col md:flex-row gap-4">
+                    <div className="space-y-2 w-full">
+                      <Label htmlFor="email">
+                        Institution Email <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="contact@university.edu"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={errors.email ? "border-destructive" : ""}
+                        autoComplete="email"
+                      />
+                      {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                    </div>
+
+                    <div className="space-y-2 w-full">
+                      <Label htmlFor="accreditationId">
+                        Accreditation ID <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="accreditationId"
+                        name="accreditationId"
+                        placeholder="ACC-12345"
+                        value={formData.accreditationId}
+                        onChange={handleChange}
+                        className={errors.accreditationId ? "border-destructive" : ""}
+                        autoComplete="accreditationId"
+                      />
+                      {errors.accreditationId && (
+                        <p className="text-xs text-destructive">{errors.accreditationId}</p>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+1 (555) 123-4567"
-                      value={formData.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="website">Website</Label>
-                    <Input
-                      id="website"
-                      name="website"
-                      type="url"
-                      placeholder="https://university.edu"
-                      value={formData.website}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="address">Address</Label>
-                    <Textarea
-                      id="address"
-                      name="address"
-                      placeholder="123 Education St, City, State, ZIP"
-                      value={formData.address}
-                      onChange={handleChange}
-                      rows={2}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Person */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-foreground">Contact Person</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="contactName">
-                    Full Name <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="contactName"
-                    name="contactName"
-                    placeholder="John Smith"
-                    value={formData.contactName}
-                    onChange={handleChange}
-                    className={errors.contactName ? "border-destructive" : ""}
-                  />
-                  {errors.contactName && <p className="text-xs text-destructive">{errors.contactName}</p>}
                 </div>
               </div>
 
@@ -206,6 +167,7 @@ export default function SignupPage() {
                       value={formData.password}
                       onChange={handleChange}
                       className={errors.password ? "border-destructive" : ""}
+                      autoComplete="password"
                     />
                     {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
                   </div>
@@ -222,6 +184,7 @@ export default function SignupPage() {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       className={errors.confirmPassword ? "border-destructive" : ""}
+                      autoComplete="password"
                     />
                     {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
                   </div>

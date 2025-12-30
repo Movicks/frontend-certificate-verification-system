@@ -39,19 +39,16 @@ export default function LoginPage() {
   const demoAccounts = {
     institution: {
       email: "admin@institution.com",
-      password: "admin123",
       label: "Institution Admin",
     },
     student: {
       email: "student@example.com",
-      password: "student123",
       label: "Student",
     },
-    superadmin: {
-      email: "superadmin@scvs.com",
-      password: "super123",
-      label: "Super Admin",
-    },
+    // superadmin: {
+    //   email: "superadmin@scvs.com",
+    //   label: "Super Admin",
+    // },
   }
 
   return (
@@ -69,7 +66,7 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="institution" className="text-xs">
                   <Building2 className="w-3 h-3 mr-1" />
                   Institution
@@ -78,10 +75,10 @@ export default function LoginPage() {
                   <GraduationCap className="w-3 h-3 mr-1" />
                   Student
                 </TabsTrigger>
-                <TabsTrigger value="superadmin" className="text-xs">
+                {/* <TabsTrigger value="superadmin" className="text-xs">
                   <UserCog className="w-3 h-3 mr-1" />
                   Admin
-                </TabsTrigger>
+                </TabsTrigger> */}
               </TabsList>
 
               <TabsContent value={activeTab} className="mt-6">
@@ -120,11 +117,11 @@ export default function LoginPage() {
                     {isLoggingIn ? "Signing in..." : "Sign In"}
                   </Button>
 
-                  <div className="text-center text-sm text-muted-foreground space-y-1 p-3 bg-muted/30 rounded-lg">
+                  {/* <div className="text-center text-sm text-muted-foreground space-y-1 p-3 bg-muted/30 rounded-lg">
                     <p className="font-medium">Demo {demoAccounts[activeTab].label}:</p>
                     <p className="font-mono text-xs">{demoAccounts[activeTab].email}</p>
                     <p className="font-mono text-xs">{demoAccounts[activeTab].password}</p>
-                  </div>
+                  </div> */}
                 </form>
               </TabsContent>
             </Tabs>

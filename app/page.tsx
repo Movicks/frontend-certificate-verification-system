@@ -23,11 +23,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+      <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-6 h-6 text-primary" />
-            <span className="font-bold text-xl">SCVS</span>
+            <span className="font-bold text-xl">SCV</span>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/auth/login">
@@ -79,9 +79,9 @@ export default function HomePage() {
                   <Search className="w-5 h-5" />
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              {/* <p className="text-xs text-muted-foreground mt-2">
                 Try demo: CERT-2024-001, CERT-2024-002, or CERT-2024-003
-              </p>
+              </p> */}
             </div>
           </AnimatedContainer>
         </div>
@@ -151,7 +151,7 @@ export default function HomePage() {
 
       {/* How It Works */}
       <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">How It Works</h2>
             <p className="text-lg text-muted-foreground text-balance">
@@ -369,7 +369,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/auth/signup">
-                <Button size="lg" variant="secondary" className="gap-2 text-base px-8">
+                <Button size="lg" variant="secondary" className="gap-2 text-base px-8 w-full md:max-w-[20rem]">
                   Register Your Institution
                   <ArrowRight className="w-5 h-5" />
                 </Button>
@@ -378,7 +378,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="gap-2 text-base px-8 border-primary-foreground/20 bg-transparent"
+                  className="gap-2 text-base px-8 border-primary-foreground/20 bg-gray-100/20 w-full md:max-w-[20rem]"
                 >
                   Sign In
                 </Button>

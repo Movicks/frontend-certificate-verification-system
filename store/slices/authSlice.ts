@@ -73,7 +73,9 @@ const authSlice = createSlice({
         state.status = "succeeded"
         state.user = action.payload.user
         state.token = action.payload.token ?? null as any
-        setAuthToken(action.payload.token)
+        if (action.payload.token) {
+          setAuthToken(action.payload.token)
+        }
         setCurrentUser(action.payload.user)
       })
       .addCase(loginThunk.rejected, (state, action) => {
@@ -89,7 +91,9 @@ const authSlice = createSlice({
         state.status = "succeeded"
         state.user = action.payload.user
         state.token = action.payload.token ?? null as any
-        setAuthToken(action.payload.token)
+        if (action.payload.token) {
+          setAuthToken(action.payload.token)
+        }
         setCurrentUser(action.payload.user)
       })
       .addCase(signupThunk.rejected, (state, action) => {

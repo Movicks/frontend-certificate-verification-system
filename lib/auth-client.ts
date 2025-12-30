@@ -62,11 +62,24 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T
 }
 
+// Try multiple potential endpoint paths to support varying backend routes
+async function requestTryPaths<T>(paths: string[], init?: RequestInit): Promise<T> {
+  let lastErr: any
+  for (const p of paths) {
+    try {
+      return await request<T>(p, init)
+    } catch (e) {
+      lastErr = e
+    }
+  }
+  throw lastErr
+}
+
 // Auth API functions
 export const authAPI = {
   // Login
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const data = await request<AuthResponse>("/auth/login", {
+    const data = await requestTryPaths<AuthResponse>(["/auth/login"], {
       method: "POST",
       body: JSON.stringify(credentials),
     })
@@ -77,7 +90,7 @@ export const authAPI = {
 
   // Signup (Institution Admin by default)
   async signup(data: SignupData): Promise<AuthResponse> {
-    const res = await request<AuthResponse>("/auth/signup", {
+    const res = await requestTryPaths<AuthResponse>(["/auth/signup"], {
       method: "POST",
       body: JSON.stringify(data),
     })
@@ -87,22 +100,22 @@ export const authAPI = {
 
   // Logout
   async logout(): Promise<void> {
-    await request<void>("/auth/logout", { method: "POST" })
+    await requestTryPaths<void>(["/auth/logout"], { method: "POST" })
     removeAuthToken() // clears local user_data
   },
 
   // Get current user (verify session via cookie)
   async getCurrentUser(): Promise<User> {
     try {
-      const user = await request<User>("/auth/me", { method: "GET" })
+      const user = await requestTryPaths<User>(["/auth/user"], { method: "GET" })
       setCurrentUser(user)
       return user
     } catch (e: any) {
       // Attempt refresh if unauthorized
       if (e?.message?.toLowerCase().includes("401") || e?.message?.toLowerCase().includes("unauthorized")) {
         try {
-          await request<void>("/auth/refresh", { method: "POST" })
-          const user = await request<User>("/auth/me", { method: "GET" })
+          await requestTryPaths<void>(["/auth/refresh"], { method: "POST" })
+          const user = await requestTryPaths<User>(["/auth/user"], { method: "GET" })
           setCurrentUser(user)
           return user
         } catch (refreshErr) {

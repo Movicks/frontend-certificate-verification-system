@@ -34,8 +34,6 @@ export function VerificationPageClient({ certificateId, verificationData }: Veri
   const [scanCount, setScanCount] = useState(verificationData.scanCount)
 
   useEffect(() => {
-    // Mock: Increment scan count
-    console.log("[v0] Certificate scanned:", certificateId)
     setScanCount((prev) => prev + 1)
   }, [certificateId])
 
