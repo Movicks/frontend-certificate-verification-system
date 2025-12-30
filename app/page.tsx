@@ -21,7 +21,7 @@ import { AnimatedContainer, SlideIn } from "@/components/animated-container"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-auto">
       {/* Navigation */}
       <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
