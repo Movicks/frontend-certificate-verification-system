@@ -5,15 +5,18 @@ import { Analytics } from "@vercel/analytics/next"
 import { QueryProvider } from "@/providers/query-provider"
 import "./globals.css"
 
-import { ReduxProvider } from "@/providers/redux-provider"
+
+import {ReduxProvider} from "../providers/redux-provider"
+
+// import { Provider } from "react-redux"
+// import { store } from "@/store/store"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MovicX Certificate Verification System",
-  description: "Secure, transparent, and instant certificate verification powered by MovicX",
-  generator: "v0.app",
+  title: "School Certificate Verification System",
+  description: "Secure, transparent, and instant certificate verification powered by CODAXLAB",
   icons: {
     icon: [
       {

@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: { certificateId: st
 
   return {
     title: `Verify Certificate - ${certificateId}`,
-    description: "Official certificate verification by MovicX",
+    description: "Official certificate verification by CODAXLAB",
     robots: "index, follow",
   }
 }

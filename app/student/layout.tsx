@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { AuthGuard } from "@/components/auth-guard"
 import { StudentSidebar } from "@/components/student-sidebar"

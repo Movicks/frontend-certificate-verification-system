@@ -41,8 +41,5 @@ export interface SignupData {
   institutionName: string
   email: string
   password: string
-  contactName: string
-  phone?: string
-  website?: string
-  address?: string
+  accreditationId: string
 }

@@ -61,7 +61,7 @@ export const superAdminAPI = {
   async approveInstitution(id: string): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log(`[v0] Approving institution ${id}`)
+        console.log(`Approving institution ${id}`)
         resolve()
       }, 800)
     })
@@ -71,7 +71,7 @@ export const superAdminAPI = {
   async rejectInstitution(id: string, reason: string): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log(`[v0] Rejecting institution ${id}: ${reason}`)
+        console.log(`Rejecting institution ${id}: ${reason}`)
         resolve()
       }, 800)
     })
@@ -81,7 +81,7 @@ export const superAdminAPI = {
   async suspendInstitution(id: string, reason: string): Promise<void> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log(`[v0] Suspending institution ${id}: ${reason}`)
+        console.log(`Suspending institution ${id}: ${reason}`)
         resolve()
       }, 800)
     })
