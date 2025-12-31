@@ -18,30 +18,17 @@ import {
   FileCheck,
 } from "lucide-react"
 import { AnimatedContainer, SlideIn } from "@/components/animated-container"
+import Navbar from "@/components/Navbar"
+import Footer from "@/components/Footer"
 
 export default function HomePage() {
   return (
     <div className="min-h-auto">
       {/* Navigation */}
-      <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield className="w-6 h-6 text-primary" />
-            <span className="font-bold text-xl">SCV</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/auth/login">
-              <Button variant="ghost">Sign In</Button>
-            </Link>
-            <Link href="/auth/signup">
-              <Button>Register Institution</Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar/>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      <section className="relative overflow-hidden bg-white lg:px-10">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <AnimatedContainer className="text-center max-w-[83rem] mx-auto space-y-8">
             <div className="inline-block p-4 bg-primary/10 rounded-2xl mb-6">
@@ -88,7 +75,7 @@ export default function HomePage() {
       </section>
 
       {/* Trust & Security */}
-      <section className="py-20 bg-background">
+      <section className="py-20 lg:px-10 bg-background">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">Built on Trust & Security</h2>
@@ -150,7 +137,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 lg:px-10 bg-muted/30">
         <div className="container mx-auto px-6">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">How It Works</h2>
@@ -215,7 +202,7 @@ export default function HomePage() {
       </section>
 
       {/* Role-Based Benefits */}
-      <section className="py-20 bg-background">
+      <section className="py-20 lg:px-10 bg-background">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">For Every Stakeholder</h2>
@@ -325,7 +312,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 lg:px-10 bg-muted/30">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">Why Choose SCVS?</h2>
@@ -360,7 +347,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 lg:px-10 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-balance">Ready to Get Started?</h2>
@@ -389,83 +376,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-background border-t">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Shield className="w-6 h-6 text-primary" />
-                <span className="font-bold text-lg">SCVS</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Secure Certificate Verification System - Trusted by institutions worldwide
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link href="/auth/signup" className="hover:text-foreground transition-colors">
-                    Register Institution
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/verify/cert-001" className="hover:text-foreground transition-colors">
-                    Verify Certificate
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    API Reference
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>© 2025 SCVS. All rights reserved. Built with security and trust.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   )
 }
