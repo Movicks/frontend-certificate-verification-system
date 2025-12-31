@@ -29,15 +29,15 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-white lg:px-10">
-        <div className="container mx-auto px-4 py-20 md:py-32">
+        <div className="container mx-auto px-4 py-20 md:pb-32 md:pt-25">
           <AnimatedContainer className="text-center max-w-[83rem] mx-auto space-y-8">
             <div className="inline-block p-4 bg-primary/10 rounded-2xl mb-6">
               <Shield className="w-16 h-16 text-primary" />
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight break-words text-center">
+            <h1 className="text-3xl md:text-6xl xl:text-7xl font-bold leading-tight break-words text-center">
               Secure Certificate Verification <span className="text-primary">System</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground text-balance max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground md:text-balance md:max-w-2xl md:mx-auto">
               Government-grade security for digital certificates. Verify authenticity instantly with QR codes and
               blockchain-backed integrity.
             </p>
@@ -77,8 +77,8 @@ export default function HomePage() {
       {/* Trust & Security */}
       <section className="py-20 lg:px-10 bg-background">
         <div className="container mx-auto px-4">
-          <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">Built on Trust & Security</h2>
+          <AnimatedContainer className="text-center max-w-4xl mx-auto mb-16">
+            <h2 className="text-2xl md:text-5xl font-bold text-balance mb-4">Built on Trust & Security</h2>
             <p className="text-lg text-muted-foreground text-balance">
               Military-grade encryption and digital signatures ensure every certificate is authentic and tamper-proof
             </p>
@@ -140,7 +140,7 @@ export default function HomePage() {
       <section className="py-20 lg:px-10 bg-muted/30">
         <div className="container mx-auto px-6">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">How It Works</h2>
+            <h2 className="text-2xl md:text-5xl font-bold text-balance mb-4">How It Works</h2>
             <p className="text-lg text-muted-foreground text-balance">
               Three simple steps to secure certificate verification
             </p>
@@ -202,10 +202,10 @@ export default function HomePage() {
       </section>
 
       {/* Role-Based Benefits */}
-      <section className="py-20 lg:px-10 bg-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">For Every Stakeholder</h2>
+            <h2 className="text-2xl md:text-5xl font-bold text-balance mb-4">For Every Stakeholder</h2>
             <p className="text-lg text-muted-foreground text-balance">
               Trusted by institutions, employers, and students worldwide
             </p>
@@ -315,7 +315,7 @@ export default function HomePage() {
       <section className="py-20 lg:px-10 bg-muted/30">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-4">Why Choose SCVS?</h2>
+            <h2 className="text-2xl md:text-5xl font-bold text-balance mb-4">Why Choose SCVS?</h2>
             <p className="text-lg text-muted-foreground text-balance">
               Enterprise-grade features for institutions of all sizes
             </p>
@@ -350,7 +350,7 @@ export default function HomePage() {
       <section className="py-20 lg:px-10 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">
           <AnimatedContainer className="text-center max-w-3xl mx-auto space-y-6">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance">Ready to Get Started?</h2>
+            <h2 className="text-2xl md:text-5xl font-bold text-balance">Ready to Get Started?</h2>
             <p className="text-lg text-primary-foreground/80 text-balance">
               Join thousands of institutions using SCVS for secure certificate verification
             </p>
