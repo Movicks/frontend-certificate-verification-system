@@ -5,7 +5,7 @@ import { AdminTopbar } from "@/components/admin-topbar"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthGuard allowedRoles={["institution_admin"]} requireApproval={true}>
+    <AuthGuard requireApproval={true}>
       <div className="h-screen flex overflow-hidden">
         <AdminSidebar />
         <div className="flex-1 flex flex-col overflow-hidden">

@@ -1,18 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import type { RootState } from "../store"
 import type { AuthResponse, LoginCredentials, SignupData, User } from "@/types/auth"
-import { authAPI, setAuthToken, setCurrentUser, removeAuthToken } from "@/lib/auth-client"
+import { authAPI, setCurrentUser, removeAuthToken } from "@/lib/auth-client"
 
 export interface AuthState {
   user: User | null
-  token: string | null
   status: "idle" | "loading" | "succeeded" | "failed"
   error: string | null
 }
 
 const initialState: AuthState = {
   user: null,
-  token: null,
   status: "idle",
   error: null,
 }
@@ -43,7 +41,7 @@ export const logoutThunk = createAsyncThunk<void>("auth/logout", async (_, { rej
   }
 })
 
-export const getCurrentUserThunk = createAsyncThunk<User>("auth/currentUser", async (_, { rejectWithValue }) => {
+export const getCurrentUserThunk = createAsyncThunk<User>("auth/user", async (_, { rejectWithValue }) => {
   try {
     const user = await authAPI.getCurrentUser()
     return user
@@ -72,10 +70,6 @@ const authSlice = createSlice({
       .addCase(loginThunk.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.status = "succeeded"
         state.user = action.payload.user
-        state.token = action.payload.token ?? null as any
-        if (action.payload.token) {
-          setAuthToken(action.payload.token)
-        }
         setCurrentUser(action.payload.user)
       })
       .addCase(loginThunk.rejected, (state, action) => {
@@ -89,12 +83,9 @@ const authSlice = createSlice({
       })
       .addCase(signupThunk.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.status = "succeeded"
-        state.user = action.payload.user
-        state.token = action.payload.token ?? null as any
-        if (action.payload.token) {
-          setAuthToken(action.payload.token)
-        }
-        setCurrentUser(action.payload.user)
+        // After successful signup, do NOT set user; require explicit login
+        state.user = null
+        // setCurrentUser(action.payload.user)
       })
       .addCase(signupThunk.rejected, (state, action) => {
         state.status = "failed"
@@ -108,12 +99,14 @@ const authSlice = createSlice({
       .addCase(logoutThunk.fulfilled, (state) => {
         state.status = "succeeded"
         state.user = null
-        state.token = null
         removeAuthToken()
       })
       .addCase(logoutThunk.rejected, (state, action) => {
         state.status = "failed"
         state.error = (action.payload as string) ?? action.error.message ?? "Logout failed"
+        // Even if the server logout fails, clear local state to avoid stale UI
+        state.user = null
+        removeAuthToken()
       })
 
       .addCase(getCurrentUserThunk.pending, (state) => {
@@ -126,6 +119,9 @@ const authSlice = createSlice({
       .addCase(getCurrentUserThunk.rejected, (state, action) => {
         state.status = "failed"
         state.error = (action.payload as string) ?? action.error.message ?? "Get user failed"
+        // Clear user on failed session check to prevent stale user display
+        state.user = null
+        removeAuthToken()
       })
   },
 })
@@ -134,7 +130,6 @@ export const { resetError, setUser } = authSlice.actions
 
 export const selectAuth = (state: RootState) => state.auth
 export const selectUser = (state: RootState) => state.auth.user
-export const selectRole = (state: RootState) => state.auth.user?.role ?? null
 export const selectIsAuthenticated = (state: RootState) => !!state.auth.user
 export const selectAuthStatus = (state: RootState) => state.auth.status
 export const selectAuthError = (state: RootState) => state.auth.error

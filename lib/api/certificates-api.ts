@@ -8,19 +8,9 @@ import type {
   BulkUploadRow,
 } from "@/types/certificate"
 import type { CertificateFormData } from "@/types/forms"
-import { getAuthToken } from "@/lib/auth-client"
 import { mockCertificates, mockStats, mockVerificationData } from "@/lib/mock-data"
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api"
-
-// Helper to create headers with auth token
-function getHeaders(): HeadersInit {
-  const token = getAuthToken()
-  return {
-    "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-  }
-}
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL|| "/api"
 
 export const certificatesAPI = {
   // Get all certificates for institution
