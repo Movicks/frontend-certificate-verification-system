@@ -19,7 +19,7 @@ export interface User {
   id: string
   email: string
   name: string
-  role: UserRole
+  // role intentionally omitted from server responses; client should not rely on it
   institutionId?: string
   institution?: Institution
   studentId?: string
@@ -29,7 +29,7 @@ export interface User {
 
 export interface AuthResponse {
   user: User
-  token: string
+  // token removed; we use httpOnly cookies for session management
 }
 
 export interface LoginCredentials {

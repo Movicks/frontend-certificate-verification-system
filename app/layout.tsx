@@ -8,8 +8,6 @@ import "./globals.css"
 
 import {ReduxProvider} from "../providers/redux-provider"
 
-// import { Provider } from "react-redux"
-// import { store } from "@/store/store"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })

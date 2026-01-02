@@ -13,7 +13,7 @@ import { useAuth } from "@/hooks/use-auth"
 import Link from "next/link"
 
 export default function SignupPage() {
-  const { signup, isSigningUp, signupError } = useAuth()
+  const { signup, isLoading, error } = useAuth()
 
   const [formData, setFormData] = useState({
     institutionName: "",
@@ -68,12 +68,19 @@ export default function SignupPage() {
 
     if (!validate()) return
 
-    signup({
-      institutionName: formData.institutionName,
-      email: formData.email,
-      password: formData.password,
-      accreditationId: formData.accreditationId,
-    })
+    try {
+      await signup({
+        institutionName: formData.institutionName,
+        email: formData.email,
+        password: formData.password,
+        accreditationId: formData.accreditationId,
+      })
+      // On successful signup, route to login page for explicit sign-in
+      window.location.href = "/auth/login"
+    } catch (err: any) {
+      // Show backend validation errors in the form alert
+      setErrors((prev) => ({ ...prev }))
+    }
   }
 
   return (
@@ -192,10 +199,10 @@ export default function SignupPage() {
               </div>
 
               {/* Success/Error Messages */}
-              {signupError && (
+              {error && (
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{signupError.message}</AlertDescription>
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
@@ -206,25 +213,16 @@ export default function SignupPage() {
                 </AlertDescription>
               </Alert>
 
-              <Button type="submit" className="w-full" size="lg" disabled={isSigningUp}>
-                {isSigningUp ? "Creating Account..." : "Register Institution"}
+              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+                {isLoading ? "Creating Account..." : "Register Institution"}
               </Button>
 
-              <div className="text-center text-sm">
-                <span className="text-muted-foreground">Already have an account? </span>
-                <Link href="/auth/login" className="text-primary hover:underline font-medium">
-                  Sign in
-                </Link>
+              <div className="text-center text-sm text-muted-foreground mt-4">
+                Already have an account? <Link href="/auth/login" className="text-primary hover:underline">Log in</Link>
               </div>
             </form>
           </CardContent>
         </Card>
-
-        <div className="mt-4 text-center">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
-            Back to home
-          </Link>
-        </div>
       </AnimatedContainer>
     </div>
   )

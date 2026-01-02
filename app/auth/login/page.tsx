@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Shield, AlertCircle, Building2, GraduationCap, UserCog } from "lucide-react"
+import { Shield, AlertCircle, Building2, GraduationCap } from "lucide-react"
 import { AnimatedContainer } from "@/components/animated-container"
 import { useAuth } from "@/hooks/use-auth"
 import Link from "next/link"
@@ -17,11 +17,12 @@ import Link from "next/link"
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { login, isLoggingIn, loginError, isAuthenticated } = useAuth()
+  const { login, isAuthenticated, status, error } = useAuth()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [activeTab, setActiveTab] = useState("institution")
+  const [formError, setFormError] = useState<string | null>(null)
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -33,7 +34,23 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    login({ email, password })
+    setFormError(null)
+
+    // Basic client-side validation to avoid server-side validator errors
+    const validEmail = /\S+@\S+\.\S+/.test(email)
+    if (!validEmail || !password || password.length < 8) {
+      setFormError("Please enter a valid email and a password of at least 8 characters.")
+      return
+    }
+
+    try {
+      await login(email, password)
+      const redirect = searchParams.get("redirect")
+      router.push(redirect || "/dashboard")
+    } catch (err: any) {
+      // Thunk unwrap error; surface generic message. Detailed backend messages show in `error` below.
+      setFormError(err?.message ?? "Login failed")
+    }
   }
 
   const demoAccounts = {
@@ -45,11 +62,10 @@ export default function LoginPage() {
       email: "student@example.com",
       label: "Student",
     },
-    // superadmin: {
-    //   email: "superadmin@scvs.com",
-    //   label: "Super Admin",
-    // },
   }
+
+  const isLoggingIn = status === "loading"
+  const loginErrorMessage = formError || error || null
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
@@ -75,10 +91,6 @@ export default function LoginPage() {
                   <GraduationCap className="w-3 h-3 mr-1" />
                   Student
                 </TabsTrigger>
-                {/* <TabsTrigger value="superadmin" className="text-xs">
-                  <UserCog className="w-3 h-3 mr-1" />
-                  Admin
-                </TabsTrigger> */}
               </TabsList>
 
               <TabsContent value={activeTab} className="mt-6">
@@ -106,22 +118,16 @@ export default function LoginPage() {
                     />
                   </div>
 
-                  {loginError && (
+                  {loginErrorMessage && (
                     <Alert variant="destructive">
                       <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>{loginError.message}</AlertDescription>
+                      <AlertDescription>{String(loginErrorMessage)}</AlertDescription>
                     </Alert>
                   )}
 
                   <Button type="submit" className="w-full" disabled={isLoggingIn}>
                     {isLoggingIn ? "Signing in..." : "Sign In"}
                   </Button>
-
-                  {/* <div className="text-center text-sm text-muted-foreground space-y-1 p-3 bg-muted/30 rounded-lg">
-                    <p className="font-medium">Demo {demoAccounts[activeTab].label}:</p>
-                    <p className="font-mono text-xs">{demoAccounts[activeTab].email}</p>
-                    <p className="font-mono text-xs">{demoAccounts[activeTab].password}</p>
-                  </div> */}
                 </form>
               </TabsContent>
             </Tabs>

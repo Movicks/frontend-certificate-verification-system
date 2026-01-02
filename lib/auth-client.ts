@@ -2,7 +2,7 @@
 
 import type { AuthResponse, LoginCredentials, SignupData, User } from "@/types/auth"
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:9000"
 
 // Minimal token helpers kept for backward compatibility (not used in secure flow)
 export function getAuthToken(): string | null {
@@ -35,7 +35,8 @@ export function setCurrentUser(user: User): void {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
+  const url = `${API_BASE_URL}${path}`
+  const res = await fetch(url, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -48,8 +49,24 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     let message = `Request failed with status ${res.status}`
     try {
       const err = await res.json()
-      message = err?.message || message
-    } catch (_) {}
+      const m = err?.message
+      if (Array.isArray(m)) {
+        message = m.join("; ")
+      } else if (typeof m === "string") {
+        message = m
+      } else if (typeof err === "string") {
+        message = err
+      }
+    } catch (_) {
+      try {
+        const text = await res.text()
+        if (text) message = text
+      } catch (_) {}
+    }
+    // Helpful debug in dev
+    if (process.env.NODE_ENV !== "production") {
+      // console.error(`[authAPI] ${init?.method || "GET"} ${url} -> ${message}`)
+    }
     throw new Error(message)
   }
 
@@ -94,20 +111,23 @@ export const authAPI = {
       method: "POST",
       body: JSON.stringify(data),
     })
-    setCurrentUser(res.user)
+    // Do NOT auto-authenticate on signup; require explicit login afterwards
+    // setCurrentUser(res.user)
     return res
   },
 
   // Logout
   async logout(): Promise<void> {
-    await requestTryPaths<void>(["/auth/logout"], { method: "POST" })
+    await requestTryPaths<void>(["/auth/logout", "/api/auth/logout"], { method: "POST" })
     removeAuthToken() // clears local user_data
   },
 
   // Get current user (verify session via cookie)
   async getCurrentUser(): Promise<User> {
     try {
-      const user = await requestTryPaths<User>(["/auth/user"], { method: "GET" })
+      const user = await requestTryPaths<User>(["/auth/user", "/auth/me"], {
+        method: "GET",
+      })
       setCurrentUser(user)
       return user
     } catch (e: any) {
@@ -115,7 +135,9 @@ export const authAPI = {
       if (e?.message?.toLowerCase().includes("401") || e?.message?.toLowerCase().includes("unauthorized")) {
         try {
           await requestTryPaths<void>(["/auth/refresh"], { method: "POST" })
-          const user = await requestTryPaths<User>(["/auth/user"], { method: "GET" })
+          const user = await requestTryPaths<User>(["/auth/user", "/auth/me"], {
+            method: "GET",
+          })
           setCurrentUser(user)
           return user
         } catch (refreshErr) {

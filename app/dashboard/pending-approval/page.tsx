@@ -12,7 +12,7 @@ export default function PendingApprovalPage() {
   const { user, logout } = useAuth()
 
   return (
-    <AuthGuard allowedRoles={["institution_admin"]}>
+    <AuthGuard>
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
         <AnimatedContainer className="w-full max-w-2xl">
           <Card className="border-2">

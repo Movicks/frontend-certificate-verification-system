@@ -1,5 +1,6 @@
 "use client"
 
+import {useEffect} from "react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import { type AppDispatch } from "@/store/store"
@@ -14,81 +15,66 @@ import {
   selectAuthError,
 } from "@/store/slices/authSlice"
 import type { User } from "@/types/auth"
-import { useEffect } from "react"
 
 export function useAuth() {
-  const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
-
   const user = useSelector(selectUser)
   const isAuthenticated = useSelector(selectIsAuthenticated)
   const status = useSelector(selectAuthStatus)
   const error = useSelector(selectAuthError)
 
-  useEffect(() => {
-    if (!user) {
-      dispatch(getCurrentUserThunk())
-    }
-  }, [dispatch])
-
-  const login = (credentials: { email: string; password: string }) => {
-    dispatch(loginThunk(credentials)).then((res: any) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        const data = res.payload
-        if (data.user.role === "institution_admin") {
-          if (data.user.institution?.status === "pending") {
-            router.push("/dashboard/pending-approval")
-          } else {
-            router.push("/dashboard")
-          }
-        } else if (data.user.role === "student") {
-          router.push("/student/dashboard")
-        } else if (data.user.role === "super_admin") {
-          router.push("/admin/dashboard")
-        }
-      }
-    })
+  const login = async (email: string, password: string) => {
+    return dispatch(loginThunk({ email, password })).unwrap()
   }
 
-  const signup = (data: any) => {
-    dispatch(signupThunk(data)).then((res: any) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        router.push("/dashboard/pending-approval")
-      }
-    })
+  const signup = async (
+    data: Omit<User, "id" | "createdAt" | "institution" | "institutionId" | "studentId"> & {
+      institutionName?: string
+      accreditationId?: string
+      password: string
+    },
+  ) => {
+    return dispatch(
+      signupThunk({
+        email: data.email,
+        password: data.password,
+        institutionName: data.institutionName || "",
+        accreditationId: data.accreditationId || "",
+      }),
+    ).unwrap()
   }
 
-  const logout = () => {
-    dispatch(logoutThunk()).then(() => {
-      router.push("/auth/login")
-    })
+  const logout = async () => {
+    return dispatch(logoutThunk()).unwrap()
   }
 
   return {
     user,
-    isLoading: status === "loading",
     isAuthenticated,
+    status,
+    error,
     login,
     signup,
     logout,
-    isLoggingIn: status === "loading",
-    isSigningUp: status === "loading",
-    loginError: error ? new Error(error) : undefined,
-    signupError: error ? new Error(error) : undefined,
+    isLoading: status === "loading",
   }
 }
 
-export function useRequireAuth(allowedRoles?: User["role"][]) {
+// Client-side route protection without role dependency
+export function useRequireAuth(allowedRoles?: never[]) {
+  const dispatch = useDispatch<AppDispatch>()
   const { user, isLoading } = useAuth()
   const router = useRouter()
 
+  // Resolve session only on protected routes
+  useEffect(() => {
+    if (!user) {
+      dispatch(getCurrentUserThunk())
+    }
+  }, [dispatch, user])
+
   if (!isLoading && !user) {
     router.push("/auth/login")
-    return null
-  }
-
-  if (user && allowedRoles && !allowedRoles.includes(user.role)) {
-    router.push("/")
     return null
   }
 

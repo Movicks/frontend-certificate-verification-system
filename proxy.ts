@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-// Define protected routes and their allowed roles
+// Define protected routes (role-based checks removed)
 const protectedRoutes = {
-  "/dashboard": ["institution_admin"],
-  "/student": ["student"],
-  "/admin": ["super_admin"],
+  "/dashboard": true,
+  "/student": true,
+  "/admin": true,
 }
 
 export function proxy(request: NextRequest) {
@@ -27,12 +27,10 @@ export function proxy(request: NextRequest) {
 
   if (protectedPath) {
     // In production, you would verify JWT from httpOnly cookie
-    // For demo, check localStorage via client-side redirect
+    // For demo, add header to trigger client-side auth check only
     const response = NextResponse.next()
 
-    // Add header to trigger client-side auth check
     response.headers.set("x-auth-required", "true")
-    response.headers.set("x-allowed-roles", JSON.stringify(protectedRoutes[protectedPath]))
 
     return response
   }

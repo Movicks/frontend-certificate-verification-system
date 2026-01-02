@@ -27,13 +27,13 @@ export default function Navbar() {
             </div>
             <div className="flex items-center gap-3">
                 <Link href="/auth/login">
-                <Button variant="ghost" className="border-2">Sign In</Button>
+                    <Button variant="ghost" className="border-2">Sign In</Button>
                 </Link>
                 <Link href="/auth/signup">
-                <Button>
-                    <span className="flex md:hidden">Sign Up</span>
-                    <span className="hidden md:flex">Register Institution</span>
-                </Button>
+                    <Button className="">
+                        <span className="flex md:hidden">Sign Up</span>
+                        <span className="hidden md:flex">Register Institution</span>
+                    </Button>
                 </Link>
             </div>
         </div>

@@ -9,7 +9,7 @@ import { LoadingSkeleton } from "@/components/loading-skeleton"
 import { superAdminAPI } from "@/lib/api/super-admin-api"
 
 export default function SuperAdminDashboardPage() {
-  const user = useRequireAuth(["super_admin"]) // restrict to super admin
+  const user = useRequireAuth()
   if (!user) return null
   const { data: stats, isLoading } = useQuery({
     queryKey: ["superadmin", "stats"],

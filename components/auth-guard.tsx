@@ -4,16 +4,14 @@ import type React from "react"
 import { useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { useAuth } from "@/hooks/use-auth"
-import type { UserRole } from "@/types/auth"
 import { Loader2 } from "lucide-react"
 
 interface AuthGuardProps {
   children: React.ReactNode
-  allowedRoles?: UserRole[]
   requireApproval?: boolean
 }
 
-export function AuthGuard({ children, allowedRoles, requireApproval = false }: AuthGuardProps) {
+export function AuthGuard({ children, requireApproval = false }: AuthGuardProps) {
   const { user, isLoading } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
@@ -26,14 +24,9 @@ export function AuthGuard({ children, allowedRoles, requireApproval = false }: A
         return
       }
 
-      // Check role authorization
-      if (allowedRoles && !allowedRoles.includes(user.role)) {
-        router.push("/")
-        return
-      }
-
-      // Check institution approval status
-      if (requireApproval && user.role === "institution_admin") {
+      // Role authorization removed: client no longer relies on user.role
+      // Check institution approval status (when institution context exists)
+      if (requireApproval && user?.institution) {
         if (user.institution?.status === "pending" && !pathname.includes("pending-approval")) {
           router.push("/dashboard/pending-approval")
           return
@@ -44,7 +37,7 @@ export function AuthGuard({ children, allowedRoles, requireApproval = false }: A
         }
       }
     }
-  }, [user, isLoading, allowedRoles, requireApproval, router, pathname])
+  }, [user, isLoading, requireApproval, router, pathname])
 
   // Show loading state
   if (isLoading) {
@@ -60,11 +53,6 @@ export function AuthGuard({ children, allowedRoles, requireApproval = false }: A
 
   // Not authorized
   if (!user) {
-    return null
-  }
-
-  // Role check failed
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
     return null
   }
 

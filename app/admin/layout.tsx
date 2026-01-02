@@ -5,7 +5,7 @@ import { SuperAdminTopbar } from "@/components/super-admin-topbar"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthGuard allowedRoles={["super_admin"]}>
+    <AuthGuard>
       <div className="h-screen flex overflow-hidden">
         <SuperAdminSidebar />
         <div className="flex-1 flex flex-col overflow-hidden">

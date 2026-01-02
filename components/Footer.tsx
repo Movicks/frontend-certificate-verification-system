@@ -18,7 +18,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="py-12 lg:px-10 bg-background border-t">
+    <footer className="pt-12 pb-5 lg:px-10 bg-background border-t">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -90,7 +90,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
+          <div className="mt-4 pt-3 md:mt-5 md:pt-5 border-t text-center text-sm text-muted-foreground">
             <p>© 2025 SCVS. All rights reserved. Built with security and trust.</p>
           </div>
         </div>
