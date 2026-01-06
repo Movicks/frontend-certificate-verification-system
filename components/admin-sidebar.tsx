@@ -58,8 +58,8 @@ export function AdminSidebar() {
   return (
     <aside
       className={cn(
-        "bg-sidebar border-r border-sidebar-border flex flex-col transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64",
+        "bg-sidebar border-r border-sidebar-border flex flex-col transition-all duration-300 max-h-[100vh]",
+        isCollapsed ? "w-16 hidden md:flex max-h-[100vh]" : "w-64 hidden md:flex max-h-[100vh]",
       )}
     >
       {/* Logo */}

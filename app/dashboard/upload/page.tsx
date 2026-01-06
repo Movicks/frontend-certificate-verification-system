@@ -114,7 +114,7 @@ export default function CertificateUploadPage() {
   if (uploadSuccess && generatedQR && certificateNumber) {
     return (
       <AnimatedContainer>
-        <div className="max-w-2xl mx-auto">
+        <div className="">
           <Card className="border-success">
             <CardHeader className="text-center">
               <div className="mx-auto w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mb-4">
@@ -157,154 +157,159 @@ export default function CertificateUploadPage() {
 
   return (
     <AnimatedContainer>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-full">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-balance">Upload Certificate</h1>
           <p className="text-muted-foreground mt-1">Create a new certificate with QR code verification</p>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="space-y-6">
+          <div className="space-y-6 grid md:grid-cols-2 gap-4">
             {/* Student Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Student Information</CardTitle>
-                <CardDescription>Enter the student's personal details</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
-                    label="Student Name"
-                    name="studentName"
-                    placeholder="John Doe"
-                    required
-                    value={formData.studentName}
-                    onChange={handleInputChange}
-                  />
-                  <InputField
-                    label="Student ID"
-                    name="studentId"
-                    placeholder="STD2024001"
-                    required
-                    value={formData.studentId}
-                    onChange={handleInputChange}
-                  />
-                </div>
+            <div className="flex flex-col gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Student Information</CardTitle>
+                  <CardDescription>Enter the student's personal details</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <InputField
+                      label="Student Name"
+                      name="studentName"
+                      placeholder="John Doe"
+                      required
+                      value={formData.studentName}
+                      onChange={handleInputChange}
+                    />
+                    <InputField
+                      label="Student ID"
+                      name="studentId"
+                      placeholder="STD2024001"
+                      required
+                      value={formData.studentId}
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
-                    label="Email Address"
-                    name="studentEmail"
-                    type="email"
-                    placeholder="student@example.com"
-                    required
-                    value={formData.studentEmail}
-                    onChange={handleInputChange}
-                  />
-                  <InputField
-                    label="Phone Number (Optional)"
-                    name="studentPhone"
-                    type="tel"
-                    placeholder="+1234567890"
-                    value={formData.studentPhone}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                  <div className="">
+                    <InputField
+                      label="Email Address"
+                      name="studentEmail"
+                      type="email"
+                      placeholder="student@example.com"
+                      required
+                      value={formData.studentEmail}
+                      onChange={handleInputChange}
+                    />
+                    <InputField
+                      label="Phone Number (Optional)"
+                      name="studentPhone"
+                      type="tel"
+                      placeholder="+1234567890"
+                      value={formData.studentPhone}
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-                <AvatarUploader onFileSelect={setPassportPhoto} label="Student Passport Photo (Optional)" />
-              </CardContent>
-            </Card>
+                  <AvatarUploader onFileSelect={setPassportPhoto} label="Student Passport Photo (Optional)" />
+                </CardContent>
+              </Card>
 
-            {/* Certificate Details */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Certificate Details</CardTitle>
-                <CardDescription>Enter the program and course information</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
-                    label="Program"
-                    name="program"
-                    placeholder="Bachelor of Science"
-                    required
-                    value={formData.program}
-                    onChange={handleInputChange}
-                  />
-                  <InputField
-                    label="Course"
-                    name="course"
-                    placeholder="Computer Science"
-                    required
-                    value={formData.course}
-                    onChange={handleInputChange}
-                  />
-                </div>
+              {/* Certificate Details */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Certificate Details</CardTitle>
+                  <CardDescription>Enter the program and course information</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <InputField
+                      label="Program"
+                      name="program"
+                      placeholder="Bachelor of Science"
+                      required
+                      value={formData.program}
+                      onChange={handleInputChange}
+                    />
+                    <InputField
+                      label="Course"
+                      name="course"
+                      placeholder="Computer Science"
+                      required
+                      value={formData.course}
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-                <div className="grid md:grid-cols-3 gap-4">
-                  <SelectField
-                    label="Session"
-                    name="session"
-                    placeholder="Select session"
-                    required
-                    options={sessionOptions}
-                    value={formData.session}
-                    onValueChange={handleSelectChange("session")}
-                  />
-                  <SelectField
-                    label="Year"
-                    name="year"
-                    required
-                    options={yearOptions}
-                    value={formData.year}
-                    onValueChange={handleSelectChange("year")}
-                  />
-                  <InputField
-                    label="Issue Date"
-                    name="issueDate"
-                    type="date"
-                    required
-                    value={formData.issueDate}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <SelectField
+                      label="Session"
+                      name="session"
+                      placeholder="Select session"
+                      required
+                      options={sessionOptions}
+                      value={formData.session}
+                      onValueChange={handleSelectChange("session")}
+                    />
+                    <SelectField
+                      label="Year"
+                      name="year"
+                      required
+                      options={yearOptions}
+                      value={formData.year}
+                      onValueChange={handleSelectChange("year")}
+                    />
+                    <InputField
+                      label="Issue Date"
+                      name="issueDate"
+                      type="date"
+                      required
+                      value={formData.issueDate}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* File Upload */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Certificate Document</CardTitle>
-                <CardDescription>Upload the official certificate file (PDF, PNG, or JPG)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <FileUploader
-                  accept=".pdf,.png,.jpg,.jpeg"
-                  maxSize={10}
-                  onFileSelect={setCertificateFile}
-                  label="Certificate File"
-                  preview={true}
-                  value={certificateFile}
-                />
-              </CardContent>
-            </Card>
+            <div className="flex flex-col gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Certificate Document</CardTitle>
+                  <CardDescription>Upload the official certificate file (PDF, PNG, or JPG)</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <FileUploader
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    maxSize={10}
+                    onFileSelect={setCertificateFile}
+                    label="Certificate File"
+                    preview={true}
+                    value={certificateFile}
+                  />
+                </CardContent>
+              </Card>
 
-            {/* Actions */}
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleReset}
-                disabled={isLoading}
-                className="bg-transparent"
-              >
-                Reset Form
-              </Button>
-              <Button type="submit" disabled={isLoading || !certificateFile} className="flex-1">
-                <UploadIcon className="w-4 h-4 mr-2" />
-                {isLoading ? "Uploading..." : "Upload Certificate"}
-              </Button>
+              {/* Actions */}
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleReset}
+                  disabled={isLoading}
+                  className="bg-transparent"
+                >
+                  Reset Form
+                </Button>
+                <Button type="submit" disabled={isLoading || !certificateFile} className="flex-1">
+                  <UploadIcon className="w-4 h-4 mr-2" />
+                  {isLoading ? "Uploading..." : "Upload Certificate"}
+                </Button>
+              </div>
             </div>
+            
           </div>
         </form>
       </div>
