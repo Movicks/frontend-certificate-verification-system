@@ -55,15 +55,15 @@ export default function CertificatesListPage() {
   }
 
   const handleRegenerate = (id: string) => {
-    console.log("[v0] Regenerating QR code for:", id)
+    console.log("Regenerating QR code for:", id)
   }
 
   const handleDownload = (id: string) => {
-    console.log("[v0] Downloading certificate:", id)
+    console.log("Downloading certificate:", id)
   }
 
   return (
-    <div className="space-y-6">
+    <div className="md:space-y-6">
       {/* Header */}
       <AnimatedContainer>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -87,7 +87,7 @@ export default function CertificatesListPage() {
 
       {/* Filters */}
       <SlideIn delay={0.1} direction="down">
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex sm:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
